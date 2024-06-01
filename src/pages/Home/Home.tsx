@@ -1,12 +1,5 @@
-import Quizz from '../../components/Quizz/Quizz';
-
 function Home() {
-  return (
-    <div>
-      Home
-      <Quizz />
-    </div>
-  );
+  return <div className="containerHome">Bienvenue !</div>;
 }
 
 export default Home;

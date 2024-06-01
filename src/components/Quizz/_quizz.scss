@@ -1,0 +1,30 @@
+.containerQuizz {
+  display: flex;
+  justify-content: center;
+  margin: 20% auto;
+  width: 70%;
+  flex-direction: column;
+}
+
+.containerStart {
+  display: flex;
+  flex-direction: column;
+  background-color: green;
+}
+
+.containerQuestions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: red;
+}
+
+.containerQuizz h1 {
+  text-align: center;
+}
+
+.containerEnd {
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+}
