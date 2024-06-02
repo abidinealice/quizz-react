@@ -1,0 +1,20 @@
+[
+  {
+    "id": "abl1",
+    "questions": [
+      "Quel est la correcte conjugaison du verbe être ?",
+      "Quel est la correcte conjugaison du verbe avoir ?",
+      "Quel est la correcte conjugaison du verbe prendre ?",
+      "Quel est la bonne orthographe ?",
+      "Quel est la bonne orthographe au pluriel ?"
+    ],
+    "reponses": [
+      ["Je suis", "Je suit", "Je suie"],
+      ["Tu a", "Tu ah", "Tu as"],
+      ["Elles prenne", "Elles prend", "Elles prennent"],
+      ["orchestre", "orcestre", "orquestre"],
+      ["savan", "savants", "savant"]
+    ],
+    "resultats": ["Je suis", "Tu as", "Elles prennent", "orchestre", "savants"]
+  }
+]

@@ -15,8 +15,14 @@
 .containerQuestions {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   gap: 20px;
   background-color: red;
+}
+.btnsContainerQuestions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 .containerQuizz h1 {

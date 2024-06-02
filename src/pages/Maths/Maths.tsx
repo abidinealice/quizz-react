@@ -2,11 +2,11 @@ import Quizz from '../../components/Quizz/Quizz';
 import questionsM from '../../data/questionsMaths.json';
 
 function Maths() {
-  const word = questionsM[0].questions[0];
-  console.log(word);
+  const questions = questionsM[0];
+  //console.log(questions);
   return (
     <div>
-      <Quizz survey={word} />
+      <Quizz survey={questions} total={questions.questions} />
     </div>
   );
 }
