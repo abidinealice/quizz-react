@@ -5,6 +5,8 @@ import Francais from './pages/Francais/Francais';
 import Maths from './pages/Maths/Maths';
 import Error from './pages/Error/Error';
 
+window.addEventListener('beforeunload', () => {});
+
 function App() {
   return (
     <Router>

@@ -5,7 +5,7 @@ function Header() {
     <div className="containerHeader">
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">Accueil</Link>
         </li>
         <li>
           <Link to="/francais">Francais</Link>

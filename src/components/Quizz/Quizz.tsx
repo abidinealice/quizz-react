@@ -12,8 +12,14 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
   //COUNTER PAGINATION
   const [counterPage, setCounterPage] = useState(0);
 
-  //COUNTER ANSWER SURVEY
-  const [counterAnswers, setCounterAnswers] = useState(0);
+  //COUNTER NUMBER QUESTION
+  const [counterNumberQ, setCounterNumberQ] = useState(0);
+
+  //COUNTER RESULTS SURVEY
+  const [counterResults, setCounterResults] = useState(0);
+
+  //SELECTED ANSWER
+  const [selectedAnswer, setSelectedAnswer] = useState<any | null>(null);
 
   //BUTTON PREVIOUS
   const handleClickP = () => {
@@ -21,10 +27,18 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
       //Show quizz presentation
       setVisible(true);
       setCounterPage(0);
+      setCounterQuestion(counterQuestion - 1);
     } else {
       //Show previous question
       setCounterQuestion(counterQuestion - 1);
       setCounterPage(counterPage - 1);
+      setSelectedAnswer(null);
+
+      if (selectedAnswer === survey?.resultats[counterNumberQ]) {
+        setCounterResults(counterResults);
+      } else {
+        setCounterResults(counterResults - 1);
+      }
     }
   };
 
@@ -33,12 +47,13 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
     if (counterPage === total.length) {
       //Show results
       setVisible(true);
+      calculResults();
     } else if (counterPage < total.length) {
       setVisible(false);
       //Show next question
+      calculResults();
       setCounterQuestion(counterQuestion + 1);
       setCounterPage(counterPage + 1);
-      calculResults();
     }
   };
 
@@ -46,45 +61,32 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
   const handleClickRetry = () => {
     setCounterQuestion(-1);
     setCounterPage(0);
-    setCounterAnswers(0);
+    setCounterResults(0);
   };
 
-  //console.log(counterQuestion);
-  //console.log(counterPage);
-
   //FUNCTION CALCUL RESULT
-  function calculResults() {
-    const radioButtons = document.getElementsByName('reponse');
-    //console.log(radioButtons);
 
-    let selectedValue;
+  const getAnswer = (ans: string) => {
+    setSelectedAnswer(ans);
+  };
 
-    for (let i: number = 0; i < radioButtons.length; i++) {
-      if (radioButtons[i].checked) {
-        selectedValue = radioButtons[i].value;
-        break;
-      }
+  const calculResults = () => {
+    if (selectedAnswer === survey?.resultats[counterNumberQ]) {
+      setCounterResults(counterResults + 1);
+      setCounterNumberQ(counterNumberQ + 1);
     }
-    console.log(selectedValue);
-
-    if (selectedValue === survey?.resultats[counterAnswers]) {
-      setCounterAnswers(counterAnswers + 1);
-      console.log(counterAnswers);
-      console.log(counterQuestion);
-      console.log(counterPage);
-    }
-    console.log(counterAnswers);
-    console.log(counterQuestion);
-    console.log(counterPage);
-  }
+  };
 
   //FUNCTION GIVE RESULT
 
   function giveResults() {
-    if (counterAnswers === survey?.questions?.length || counterAnswers === 4) {
-      return <p>Felicitations ! Vous avez obtenues {counterAnswers} réponses ! Continuez comme ça !</p>;
-    } else if (counterAnswers === 3 || counterAnswers < 3) {
-      return <p>Attentions ! Vous avez obtenues {counterAnswers} réponses ! Revoyez vos cours !</p>;
+    if (counterResults === survey?.questions?.length || counterResults === 4) {
+      return <p>Felicitations ! Vous avez obtenues {counterResults} bonnes réponses ! Continuez comme ça !</p>;
+    } else if (counterResults === 3 || counterResults < 3) {
+      if (counterResults < 0) {
+        return <p>Attentions ! Vous avez obtenues 0 bonnes réponses ! Revoyez vos cours !</p>;
+      }
+      return <p>Attentions ! Vous avez obtenues {counterResults} bonnes réponses ! Revoyez vos cours !</p>;
     }
   }
 
@@ -95,11 +97,10 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
         <div className="containerQuestions">
           <h1>{survey?.questions[counterQuestion]}</h1>
           <div className="answersContainerQuestions">
-            {survey?.reponses[counterQuestion].map((tags) => (
-              <div key={tags.toString()}>
-                <input type="radio" id={tags} name="reponse" value={tags} />
-                <label htmlFor={tags}>{tags}</label>
-              </div>
+            {survey?.reponses[counterQuestion].map((ans) => (
+              <button key={ans.toString()} onClick={() => getAnswer(ans)}>
+                {ans}
+              </button>
             ))}
           </div>
           <div className="btnsContainerQuestions">
@@ -127,7 +128,7 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
       return (
         <div className="containerQuizz">
           <div className="containerStart">
-            <h1>Prêt pour le test ?</h1>
+            <h1>Prêt pour le test de {survey?.id} ?</h1>
             <button className="btnStart" onClick={handleClickN}>
               Commencer
             </button>
