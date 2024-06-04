@@ -4,6 +4,8 @@
 
 Ceci est une application REACT que j’ai développée pour tester ses connaissance en mathématiques et francais. Pour l'instant le niveau des questions est au plus bas.
 
+Version 1.0.
+
 ## Comment lancer le projet ?
 
 ### Avec yarn
