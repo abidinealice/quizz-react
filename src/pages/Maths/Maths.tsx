@@ -1,3 +1,4 @@
+import PictureMaths from '../../components/Assets/PictureMaths';
 import Quizz from '../../components/Quizz/Quizz';
 import questionsM from '../../data/questionsMaths.json';
 
@@ -6,7 +7,7 @@ function Maths() {
   //console.log(questions);
   return (
     <div>
-      <Quizz survey={questions} total={questions.questions} />
+      <Quizz survey={questions} total={questions.questions} picture={<PictureMaths />} />
     </div>
   );
 }

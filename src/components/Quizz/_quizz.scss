@@ -100,3 +100,10 @@
   border-radius: 4px;
   background-color: hsl(261, 22%, 38%);
 }
+
+.containerResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}

@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import PictureQuizzSad from '../Assets/PictureQuizzSad';
+import PictureQuizzHappy from '../Assets/PictureQuizzHappy';
 
 type FileType = { id: string; questions: string[]; reponses: string[][]; resultats: string[] };
 
-function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
+function Quizz({ survey, total, picture }: { survey?: FileType; total: string[]; picture: JSX.Element }) {
   //IS CONTAINER VISIBLE OR NOT?
   const [visible, setVisible] = useState(true);
 
@@ -54,6 +56,10 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
       calculResults();
       setCounterQuestion(counterQuestion + 1);
       setCounterPage(counterPage + 1);
+      console.log(counterResults);
+      console.log(counterQuestion);
+      console.log(counterNumberQ);
+      console.log(selectedAnswer);
     }
   };
 
@@ -71,8 +77,10 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
   };
 
   const calculResults = () => {
-    if (selectedAnswer === survey?.resultats[counterNumberQ]) {
+    if (selectedAnswer === survey?.resultats[counterQuestion]) {
       setCounterResults(counterResults + 1);
+      setCounterNumberQ(counterNumberQ + 1);
+    } else {
       setCounterNumberQ(counterNumberQ + 1);
     }
   };
@@ -81,12 +89,27 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
 
   function giveResults() {
     if (counterResults === survey?.questions?.length || counterResults === 4) {
-      return <p>Felicitations ! Vous avez obtenues {counterResults} bonnes réponses ! Continuez comme ça !</p>;
+      return (
+        <div className="containerResults">
+          <PictureQuizzHappy />
+          <p>Felicitations ! Vous avez obtenues {counterResults} bonnes réponses ! Continuez comme ça !</p>
+        </div>
+      );
     } else if (counterResults === 3 || counterResults < 3) {
       if (counterResults < 0) {
-        return <p>Attentions ! Vous avez obtenues 0 bonnes réponses ! Revoyez vos cours !</p>;
+        return (
+          <div className="containerResults">
+            <PictureQuizzSad />
+            <p>Attentions ! Vous avez obtenues 0 bonnes réponses ! Revoyez vos cours !</p>
+          </div>
+        );
       }
-      return <p>Attentions ! Vous avez obtenues {counterResults} bonnes réponses ! Revoyez vos cours !</p>;
+      return (
+        <div className="containerResults">
+          <PictureQuizzSad />
+          <p>Attentions ! Vous avez obtenues {counterResults} bonnes réponses ! Revoyez vos cours !</p>
+        </div>
+      );
     }
   }
 
@@ -117,7 +140,6 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
         <div className="containerQuizz">
           <div className="containerEnd">
             <h1>Résultats</h1>
-            <p>Voici vos résultats</p>
             {giveResults()}
             <button onClick={handleClickRetry}>Recommencer ?</button>
           </div>
@@ -129,6 +151,7 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
         <div className="containerQuizz">
           <div className="containerStart">
             <h1>Prêt pour le test de {survey?.id} ?</h1>
+            <div style={{ margin: 'auto' }}>{picture}</div>
             <button className="btnStart" onClick={handleClickN}>
               Commencer
             </button>
