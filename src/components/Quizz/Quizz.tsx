@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import PictureQuizzSad from '../Assets/PictureQuizzSad';
+import PictureQuizzHappy from '../Assets/PictureQuizzHappy';
 
 type FileType = { id: string; questions: string[]; reponses: string[][]; resultats: string[] };
 
@@ -81,10 +83,20 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
 
   function giveResults() {
     if (counterResults === survey?.questions?.length || counterResults === 4) {
-      return <p>Felicitations ! Vous avez obtenues {counterResults} bonnes réponses ! Continuez comme ça !</p>;
+      return (
+        <div>
+          <p>Felicitations ! Vous avez obtenues {counterResults} bonnes réponses ! Continuez comme ça !</p>
+          <PictureQuizzHappy />
+        </div>
+      );
     } else if (counterResults === 3 || counterResults < 3) {
       if (counterResults < 0) {
-        return <p>Attentions ! Vous avez obtenues 0 bonnes réponses ! Revoyez vos cours !</p>;
+        return (
+          <div>
+            <p>Attentions ! Vous avez obtenues 0 bonnes réponses ! Revoyez vos cours !</p>
+            <PictureQuizzSad />
+          </div>
+        );
       }
       return <p>Attentions ! Vous avez obtenues {counterResults} bonnes réponses ! Revoyez vos cours !</p>;
     }
@@ -117,7 +129,7 @@ function Quizz({ survey, total }: { survey?: FileType; total: string[] }) {
         <div className="containerQuizz">
           <div className="containerEnd">
             <h1>Résultats</h1>
-            <p>Voici vos résultats</p>
+
             {giveResults()}
             <button onClick={handleClickRetry}>Recommencer ?</button>
           </div>
